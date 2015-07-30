@@ -21,9 +21,9 @@ var sequelize = new Sequelize(DB_name, user, pwd,
                       { dialect:  protocol,
                         protocol: protocol,
                         port:     port,
-                        host:     host,    
+                        host:     host,
                         storage:  storage,  //solo SQLite (.env)
-                        omitNull: true      //solo Postgres 
+                        omitNull: true      //solo Postgres
                        }
                     );
 
@@ -39,6 +39,10 @@ sequelize.sync().then(function() {
       Quiz.create({
                   pregunta: 'Capital de Italia',
                   respuesta: 'Roma',
+                });
+      Quiz.create({
+                  pregunta: 'Capital de Portugal',
+                  respuesta: 'Lisboa',
                 })
           .then(function(){console.log('Base de datos inicializada!!')});
     };
