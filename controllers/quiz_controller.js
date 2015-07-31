@@ -18,7 +18,13 @@ exports.load = function(req, res, next, quizId) {
 
 //GET /quizes
 exports.index = function(req, res) {
-		models.Quiz.findAll().then(function(quizes){
+
+		var srch = "%";
+		if (req.query.search){ // Distinto de undefined
+			srch = req.query.search.trim();
+			srch = "%"+srch.replace(/ /g,"%")+"%";
+		}
+		models.Quiz.findAll({where:["LOWER(pregunta) like LOWER(?)", srch]}).then(function(quizes){
 			res.render('quizes/index',{ quizes: quizes});
 		}).catch(function(error) { next(error); });
 };
