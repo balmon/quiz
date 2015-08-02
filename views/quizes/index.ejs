@@ -3,6 +3,8 @@
     <tr><td><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td></tr>
   <% } %>
 </table>
+<a href="/quizes/new"><button type="button">Crear pregunta</button></a>
+<p>
 <form method="get" action="/quizes">
   Buscar por:
   <input type="text" name="search" value="Introduzca el texto a buscar" onclick="this.select();">
