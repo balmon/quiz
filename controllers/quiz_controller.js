@@ -82,20 +82,29 @@ exports.edit = function(req, res){
 exports.update = function(req, res){
 	//El objeto req.quiz viene cargado del autoload (metodo exports.load)
 	//Se actualizan los campos con los nuevos valores
-	req.quiz.pregunta = req.body.quiz.pregunta;
-	req.quiz.respuesta = req.body.quiz.respuesta;
+	var quiz = req.quiz;
+	quiz.pregunta = req.body.quiz.pregunta;
+	quiz.respuesta = req.body.quiz.respuesta;
 
-	req.quiz
+	quiz
 		.validate()	//Se valida la entrada
 		.then(
 			function (err){
 				if (err){
-					res.render('quizes/edit', {quiz: req.quiz, errors: err.errors});
+					res.render('quizes/edit', {quiz: quiz, errors: err.errors});
 				} else {
-					req.quiz
+					quiz
 						.save ({ fields: ["pregunta", "respuesta"]})
 						.then ( function(){ res.redirect('/quizes'); });
 				}
 			}
 		)
-}
+};
+
+//DELETE '/quizes/:quizId(\\d+)'
+exports.delete = function(req, res){
+	var quiz = req.quiz;
+	quiz.destroy().then ( function(){
+		res.redirect ('/quizes');
+	}).catch( function(err){next(error);});
+};
