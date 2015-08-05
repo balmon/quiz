@@ -10,5 +10,6 @@ header, nav,section,footer	{text-align: center;}
 nav span 				    {margin: 0px 10px 0px 0px;}
 #ErrorMsgs                  {color: #f61; font-size: smaler}
 
-table, th, td         {text-align: left;}
-.right 				 {float: right;}
+table, td   {text-align: left;}
+th          {text-align: center;}
+.right 		{float: right;}

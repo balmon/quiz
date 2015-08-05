@@ -1,3 +1,13 @@
+// MW de autorización para accesos de HTTP restringidos
+exports.loginRequired = function(req, res, next){
+    if (req.session.user){
+        next();
+    }else{
+        res.redirect("/login");
+    }
+};
+
+
 // GET /login -- Formualario de login
 exports.new = function (req, res) {
 
@@ -36,3 +46,5 @@ exports.destroy = function(req, res){
     delete req.session.user;
     res.redirect(req.session.redir.toString());
 };
+
+
