@@ -1,34 +1,36 @@
-<table>
-  <tr>
-    <th>Pregunta</th>
-    <th>Tema</th>
-    <th></th>
-    <th></th>
-  </tr>
-  <% var i; for (i=0; i < quizes.length; i++){ %>
-    <tr>
-      <td><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
-      <td>(<%= quizes[i].tema %>)</td>
-      <td><a href="quizes/<%= quizes[i].id %>/edit"><button style="color:blue">Editar</button></a></td>
-      <td>
-        <form method="post" action="quizes/<%= quizes[i].id %>?_method=delete">
-          <button type="submit" style="color:red" onclick="return confirm('Borrar : <%= quizes[i].pregunta %>');">
-          Borrar
-          </button>
-        </form>
-      </td>
-    </tr>
-  <% } %>
-</table>
-<br>
-<div style="text-align:right">
-  <a href="/quizes/new"><button type="button" style="color:green;">Crear pregunta</button></a>
+<div style="text-align:left">
+    <table>
+      <tr>
+        <th>Pregunta</th>
+        <th>Tema</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <% var i; for (i=0; i < quizes.length; i++){ %>
+        <tr>
+          <td><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
+          <td>(<%= quizes[i].tema %>)</td>
+          <td><a href="quizes/<%= quizes[i].id %>/edit"><button style="color:blue">Editar</button></a></td>
+          <td>
+            <form method="post" action="quizes/<%= quizes[i].id %>?_method=delete">
+              <button type="submit" style="color:red" onclick="return confirm('Borrar : <%= quizes[i].pregunta %>');">
+              Borrar
+              </button>
+            </form>
+          </td>
+        </tr>
+      <% } %>
+    </table>
+    <br>
+    <div style="text-align:right">
+      <a href="/quizes/new"><button type="button" style="color:green;">Crear pregunta</button></a>
+    </div>
+    <br>
+    <br>
+    <form method="get" action="/quizes">
+      Buscar por:
+      <input type="text" name="search" value="Introduzca texto a buscar" onclick="this.select();">
+      <br>
+      <input type="submit" value="Buscar">
+    </form>
 </div>
-<br>
-<br>
-<form method="get" action="/quizes">
-  Buscar por:
-  <input type="text" name="search" value="Introduzca texto a buscar" onclick="this.select();">
-  <br>
-  <input type="submit" value="Buscar">
-</form>

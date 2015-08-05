@@ -1,7 +1,8 @@
 // Definición del modelo quize
 
 module.exports = function(sequelize, DataTypes){
-  return sequelize.define('Quiz',
+  return sequelize.define(
+      'Quiz',
         {
           pregunta: {
             type: DataTypes.STRING,
