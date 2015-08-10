@@ -6,28 +6,45 @@
 
 var app = require('../app');
 var debug = require('debug')('quiz:server');
+var fs = require('fs');
+var https = require('https');
 var http = require('http');
+
+var options = {
+  key: fs.readFileSync('certs/quiz-balmon-key.pem').toString(),
+  cert: fs.readFileSync('certs/quiz-balmon-cert.pem').toString()
+};
 
 /**
  * Get port from environment and store in Express.
  */
 
 var port = normalizePort(process.env.PORT || '3000');
+var portSecure = normalizePort(process.env.PORT_SECURE || '8443');
+
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTP server and HTTPS server.
  */
 
 var server = http.createServer(app);
+var serverSecure = https.createServer(options, app);
+
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
 server.listen(port);
+//var server = app.listen(port);
 server.on('error', onError);
-server.on('listening', onListening);
+server.on('listening', onListeningHttp);
+
+
+serverSecure.listen(portSecure);
+serverSecure.on('error', onError);
+serverSecure.on('listening', onListeningHttps);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -81,10 +98,20 @@ function onError(error) {
  * Event listener for HTTP server "listening" event.
  */
 
-function onListening() {
+function onListeningHttp() {
   var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log('Http Listening on ' + bind) ;
+}
+
+function onListeningHttps() {
+    var addr = serverSecure.address();
+    var bind = typeof addr === 'string'
+        ? 'pipe ' + addr
+        : 'port ' + addr.port;
+    debug('Listening on ' + bind);
+    console.log('Https Listening on ' + bind) ;
 }
