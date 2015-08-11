@@ -20,16 +20,26 @@ app.use(partials());
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+
+// parse request bodies
+app.use(bodyParser());
+app.use(methodOverride('_method'));
+app.use(bodyParser.urlencoded({required: false}));
 app.use(bodyParser.json());
-//app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.urlencoded());
-//app.use(cookieParser('quiz_balmon'));
+
+//Session support
+app.use(cookieParser('quiz_balmon'));
 app.use(session({
     secret: 'quiz_balmon',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        secure : true,
+        maxAge : 2*60000 //  expire time session to 2 min (2 * 60000 milisengundo).
+    }
 }));
-app.use(methodOverride('_method'));
+
+// server asset files
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Helpers dinamicos:

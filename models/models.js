@@ -1,7 +1,7 @@
 var path = require('path');
 
-//Postgres DATABASE_URL = postgres://user:passwd@host:port/database
-//SQLite   DATABASE_URL = sqlite://:@:/
+//  Postgres DATABASE_URL = postgres://user:passwd@host:port/database
+//  SQLite   DATABASE_URL = sqlite://:@:/
 console.log(process.env.DATABASE_URL);
 var url = process.env.DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
 var DB_name  = (url[6]||null);
@@ -13,10 +13,10 @@ var port     = (url[5]||null);
 var host     = (url[4]||null);
 var storage  = process.env.DATABASE_STORAGE;
 
-//Cargar Modelo ORM
+//  Cargar Modelo ORM
 var Sequelize = require('sequelize');
 
-//Usar BBDD sqlite3
+//  Usar BBDD sqlite3
 var sequelize = new Sequelize(DB_name, user, pwd,
                       { dialect:  protocol,
                         protocol: protocol,
@@ -27,16 +27,18 @@ var sequelize = new Sequelize(DB_name, user, pwd,
                        }
                     );
 
-//Importar la definción de la tabla Quiz en quiz.js
+//  Importar la definción de la tabla Quiz en quiz.js
 var quiz_path = path.join(__dirname, 'quiz');
 var Quiz = sequelize.import(quiz_path);
 
-//Importar la definción de la tabla Comment en quiz.js
+//  Importar la definción de la tabla Comment en quiz.js
 var comment_path = path.join(__dirname, 'comment');
 var Comment = sequelize.import(comment_path);
 
-//Definir relaciones one-toMany
-Comment.belongsTo(Quiz);
+//  Definir relaciones one-toMany
+//  OJO: Se define la eliminación en cascada de los Comments al eliminar un Quiz
+//  en caso contrario se definiria a NULL la FK (QuizId) en caso de eliminar el Quiz asociado.
+Comment.belongsTo(Quiz, {onDelete: 'cascade'});
 Quiz.hasMany(Comment);
 
 exports.Quiz = Quiz; //exportar definicion de tabla Quiz
@@ -49,12 +51,12 @@ sequelize.sync().then(function() {
       Quiz.create({
                   pregunta:   'Capital de Italia',
                   respuesta:  'Roma',
-                  tema:       'Humanidades'
+                  tema:       'humanidades'
                 });
       Quiz.create({
                   pregunta:   'Capital de Portugal',
                   respuesta:  'Lisboa',
-                  tema:       'Humanidades'
+                  tema:       'humanidades'
                 })
           .then(function(){console.log('Base de datos inicializada!!')});
     };

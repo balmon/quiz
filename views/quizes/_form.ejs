@@ -1,6 +1,6 @@
 <label for="tema" class="rem">Tema:</label>
 <select id="tema" name="quiz[tema]">
- <option value="otro">Otro</option>
+ <option value="otro" selected>Otro</option>
  <option value="humanidades">Humanidades</option>
  <option value="ocio">Ocio</option>
  <option value="ciencia">Ciencia</option>
@@ -14,6 +14,8 @@
 <a href="/quizes"><button type="button">Cancelar</button></a>
 <input type="submit" value="Salvar">
 
-<script>
-  document.getElementById("tema").value="<%= quiz.tema %>";
-</script>
+<% if (quiz.tema){%>
+    <script>
+      document.getElementById("tema").value="<%= quiz.tema %>";
+    </script>
+<%}%>

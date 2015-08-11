@@ -8,7 +8,7 @@ exports.loginRequired = function(req, res, next){
 };
 
 
-// GET /login -- Formualario de login
+// GET /login -- Formulario de login
 exports.new = function (req, res) {
 
     var errors = (req.session.errors || {});
