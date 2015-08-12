@@ -34,8 +34,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        secure : true,
-        maxAge : 2*60000 //  expire time session to 2 min (2 * 60000 milisengundo).
+        secure : false,  // true no almacena datos en session HTTP solo en HTTPS
+        maxAge : 2*60000 // expire time session to 2 min (2 * 60000 milisengundo).
     }
 }));
 
